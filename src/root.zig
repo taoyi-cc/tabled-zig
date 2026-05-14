@@ -185,7 +185,7 @@ pub fn init() Error!void {
         if (original == 0) {
             return Error.GetOutputCPFailed;
         }
-        if (SetConsoleOutputCP(65001) == 0) {
+        if (!SetConsoleOutputCP(65001).toBool()) {
             return Error.SetOutputCPFailed;
         }
     }
