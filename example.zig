@@ -3,6 +3,9 @@ const tabled = @import("src/root.zig");
 const Table = tabled.Table;
 
 pub fn main(init: std.process.Init) !void {
+    try tabled.init(); // It is needed on Windows systems, otherwise garbled text may appear.
+    defer tabled.deinit();
+
     const gpa = init.gpa;
     const io = init.io;
 

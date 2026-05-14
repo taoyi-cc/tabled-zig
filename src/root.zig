@@ -170,3 +170,29 @@ pub const Table = struct {
         return self.list.items;
     }
 };
+
+const builtin = @import("builtin");
+const windows = std.os.windows;
+extern "kernel32" fn GetConsoleOutputCP() callconv(.winapi) windows.UINT;
+extern "kernel32" fn SetConsoleOutputCP(wCodePageID: windows.UINT) callconv(.winapi) windows.BOOL;
+
+var original: c_uint = undefined;
+const Error = error{ SetOutputCPFailed, GetOutputCPFailed };
+
+pub fn init() Error!void {
+    if (builtin.os.tag == .windows) {
+        original = GetConsoleOutputCP();
+        if (original == 0) {
+            return Error.GetOutputCPFailed;
+        }
+        if (SetConsoleOutputCP(65001) == 0) {
+            return Error.SetOutputCPFailed;
+        }
+    }
+}
+
+pub fn deinit() void {
+    if (builtin.os.tag == .windows) {
+        _ = SetConsoleOutputCP(original);
+    }
+}
