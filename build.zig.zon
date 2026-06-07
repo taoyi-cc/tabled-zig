@@ -2,6 +2,6 @@
     .name = .tabled,
     .version = "0.0.1",
     .minimum_zig_version = "0.16.0",
-    .paths = .{""},
+    .paths = .{ "src", "build.zig", "build.zig.zon" },
     .fingerprint = 0x79487e62d56823e,
 }
