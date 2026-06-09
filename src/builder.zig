@@ -17,10 +17,6 @@ pub const Builder = struct {
         self.source.deinit(self.allocator);
     }
 
-    pub fn pushLineComptime(self: *Builder, comptime len: usize, comptime line: [len]String) !void {
-        try self.source.append(self.allocator, &line);
-    }
-
     pub fn pushLine(self: *Builder, line: []const String) !void {
         try self.source.append(self.allocator, line);
     }

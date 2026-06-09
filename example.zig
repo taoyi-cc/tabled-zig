@@ -83,7 +83,7 @@ fn example1(init: std.process.Init) !void {
         defer b.deinit();
     }
 
-    try b.pushLineComptime(3, [_][]const u8{ "Name", "Size(Byte)", "Type" });
+    try b.pushLine(&[_][]const u8{ "Name", "Size(byte)", "Type" });
     const bufs = try gpa.alloc([64]u8, list.items.len);
     defer gpa.free(bufs);
 
@@ -107,8 +107,8 @@ fn example2(init: std.process.Init) !void {
     var b = tabled.Builder.init(gpa);
     defer b.deinit();
 
-    try b.pushLineComptime(3, [_][]const u8{ "A", "B", "C" });
-    try b.pushLineComptime(3, [_][]const u8{ "1", "2", "3" });
+    try b.pushLine(&[_][]const u8{ "A", "B", "C" });
+    try b.pushLine(&[_][]const u8{ "1", "2", "3" });
     try b.pushLine(&[_][]const u8{ "4", "5", "6" });
 
     var t1 = b.build(.{ .style = .ascii_round, .gap = 1 });
